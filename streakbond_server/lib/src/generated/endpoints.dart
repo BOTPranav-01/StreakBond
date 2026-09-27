@@ -17,6 +17,7 @@ import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
     as _iais;
 import '../auth/email_idp_endpoint.dart' as _iuc1hd5t;
 import '../auth/jwt_refresh_endpoint.dart' as _inwq3ztq;
+import '../endpoints/auth_helper_endpoint.dart' as _irbduu5b;
 import '../endpoints/pact_endpoint.dart' as _im9yrlj4;
 import '../endpoints/streak_stream_endpoint.dart' as _ij1pb6h3;
 
@@ -34,6 +35,12 @@ class Endpoints extends _is.EndpointDispatch {
         ..initialize(
           server,
           'jwtRefresh',
+          null,
+        ),
+      'authHelper': _irbduu5b.AuthHelperEndpoint()
+        ..initialize(
+          server,
+          'authHelper',
           null,
         ),
       'pact': _im9yrlj4.PactEndpoint()
@@ -251,6 +258,32 @@ class Endpoints extends _is.EndpointDispatch {
                       .refreshAccessToken(
                         session,
                         refreshToken: params['refreshToken'],
+                      ),
+        ),
+      },
+    );
+    connectors['authHelper'] = _is.EndpointConnector(
+      name: 'authHelper',
+      endpoint: endpoints['authHelper']!,
+      methodConnectors: {
+        'getLatestVerificationCode': _is.MethodConnector(
+          name: 'getLatestVerificationCode',
+          params: {
+            'email': _is.ParameterDescription(
+              name: 'email',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['authHelper'] as _irbduu5b.AuthHelperEndpoint)
+                      .getLatestVerificationCode(
+                        session,
+                        params['email'],
                       ),
         ),
       },

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'src/business/streak_evaluator.dart';
+import 'src/business/verification_code_store.dart';
 import 'package:serverpod_auth_idp_server/core.dart';
 import 'package:serverpod_auth_idp_server/providers/email.dart';
 import 'package:serverpod_cloud_storage/serverpod_cloud_storage.dart';
@@ -25,14 +26,36 @@ void run(List<String> args) async {
       JwtConfigFromPasswords(),
     ],
     identityProviderBuilders: [
-      // Configure the email identity provider for email/password authentication.
-      // The default setup works with Serverpod Cloud without configuration. In
-      // development the verification codes are logged to the console, and in
-      // staging and production they are sent through the Serverpod Cloud email
-      // service. If you want to use a custom provider for sending emails, use
-      // `EmailIdpConfigFromPasswords`.
-      ServerpodCloudEmailIdpConfig(
-        appDisplayName: 'streakbond',
+      EmailIdpConfigFromPasswords(
+        sendRegistrationVerificationCode: (
+          session, {
+          required email,
+          required accountRequestId,
+          required verificationCode,
+          required transaction,
+        }) async {
+          VerificationCodeStore.setCode(email, verificationCode);
+          stdout.writeln('==============================================');
+          stdout.writeln('VERIFICATION CODE FOR $email: $verificationCode');
+          stdout.writeln('==============================================');
+          session.log(
+            'VERIFICATION CODE FOR $email: $verificationCode',
+            level: LogLevel.info,
+          );
+        },
+        sendPasswordResetVerificationCode: (
+          session, {
+          required email,
+          required passwordResetRequestId,
+          required verificationCode,
+          required transaction,
+        }) async {
+          stdout.writeln('PASSWORD RESET CODE FOR $email: $verificationCode');
+          session.log(
+            'PASSWORD RESET CODE FOR $email: $verificationCode',
+            level: LogLevel.info,
+          );
+        },
       ),
     ],
   );

@@ -247,6 +247,24 @@ class EndpointJwtRefresh extends _iacc.EndpointRefreshJwtTokens {
       );
 }
 
+/// Public helper endpoint for authentication during hackathon evaluation.
+/// Enables seamless testing of the sign-up flow without third-party SMTP services.
+/// {@category Endpoint}
+class EndpointAuthHelper extends _isc.EndpointRef {
+  EndpointAuthHelper(_isc.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'authHelper';
+
+  /// Retrieves the latest verification code generated for an email.
+  _ida.Future<String?> getLatestVerificationCode(String email) =>
+      caller.callServerEndpoint<String?>(
+        'authHelper',
+        'getLatestVerificationCode',
+        {'email': email},
+      );
+}
+
 /// Core endpoint for managing pacts, check-ins, and streaks.
 /// All methods require authentication.
 /// {@category Endpoint}
@@ -395,6 +413,7 @@ class Client extends _isc.ServerpodClientShared {
        ) {
     emailIdp = EndpointEmailIdp(this);
     jwtRefresh = EndpointJwtRefresh(this);
+    authHelper = EndpointAuthHelper(this);
     pact = EndpointPact(this);
     streakStream = EndpointStreakStream(this);
     modules = Modules(this);
@@ -403,6 +422,8 @@ class Client extends _isc.ServerpodClientShared {
   late final EndpointEmailIdp emailIdp;
 
   late final EndpointJwtRefresh jwtRefresh;
+
+  late final EndpointAuthHelper authHelper;
 
   late final EndpointPact pact;
 
@@ -414,6 +435,7 @@ class Client extends _isc.ServerpodClientShared {
   Map<String, _isc.EndpointRef> get endpointRefLookup => {
     'emailIdp': emailIdp,
     'jwtRefresh': jwtRefresh,
+    'authHelper': authHelper,
     'pact': pact,
     'streakStream': streakStream,
   };

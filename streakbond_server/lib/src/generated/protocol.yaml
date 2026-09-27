@@ -9,6 +9,8 @@ emailIdp:
   - hasAccount:
 jwtRefresh:
   - refreshAccessToken:
+authHelper:
+  - getLatestVerificationCode:
 pact:
   - createPact:
   - acceptPact:
