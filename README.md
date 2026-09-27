@@ -6,6 +6,13 @@ StreakBond is a two-person accountability pact app built for the **"Build Someth
 
 ---
 
+### 🌐 Live Deployment
+- **Web App**: [https://streakbond.serverpod.space/](https://streakbond.serverpod.space/)
+- **API Server**: [https://streakbond.api.serverpod.space/](https://streakbond.api.serverpod.space/)
+- **Insights Console**: [https://streakbond.insights.serverpod.space/](https://streakbond.insights.serverpod.space/)
+
+---
+
 ## 🎯 The Core Concept
 
 Accountability apps fail because the cost of failing only hurts yourself. StreakBond changes the stakes:
