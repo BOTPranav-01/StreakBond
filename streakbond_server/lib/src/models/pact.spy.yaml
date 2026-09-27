@@ -1,0 +1,32 @@
+### A two-person accountability pact with a shared daily commitment.
+class: Pact
+table: pact
+fields:
+  ### The title of the daily commitment (e.g., '20 pushups').
+  title: String
+  ### The user identifier of the pact creator.
+  ownerId: String
+  ### The user identifier of the partner (null until accepted).
+  partnerId: String?
+  ### Short invite code for partner to join (e.g., 'BOND-7X3K').
+  inviteCode: String
+  ### Current status: pending, active, or broken.
+  status: PactStatus
+  ### Current consecutive streak count.
+  streak: int
+  ### All-time best streak for this pact.
+  bestStreak: int
+  ### Check-in window start time in UTC, format 'HH:mm'.
+  checkInWindowStartUtc: String
+  ### Check-in window end time in UTC, format 'HH:mm'.
+  checkInWindowEndUtc: String
+  ### When this pact was created.
+  createdAt: DateTime
+indexes:
+  pact_invite_code_idx:
+    fields: inviteCode
+    unique: true
+  pact_owner_idx:
+    fields: ownerId
+  pact_partner_idx:
+    fields: partnerId

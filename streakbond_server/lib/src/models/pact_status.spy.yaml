@@ -1,0 +1,6 @@
+### Status of a pact between two users.
+enum: PactStatus
+values:
+  - pending
+  - active
+  - broken

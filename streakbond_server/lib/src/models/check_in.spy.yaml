@@ -1,0 +1,18 @@
+### A single daily check-in record. One per user per pact per day.
+class: CheckIn
+table: check_in
+fields:
+  ### The pact this check-in belongs to.
+  pactId: int
+  ### The user identifier who checked in.
+  userId: String
+  ### The date of check-in in 'yyyy-MM-dd' format (UTC).
+  day: String
+  ### When this check-in was recorded.
+  createdAt: DateTime
+indexes:
+  check_in_unique_idx:
+    fields: pactId, userId, day
+    unique: true
+  check_in_pact_day_idx:
+    fields: pactId, day

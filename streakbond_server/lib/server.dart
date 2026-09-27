@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:io';
 
+import 'src/business/streak_evaluator.dart';
 import 'package:serverpod_auth_idp_server/core.dart';
 import 'package:serverpod_auth_idp_server/providers/email.dart';
 import 'package:serverpod_cloud_storage/serverpod_cloud_storage.dart';
@@ -102,4 +104,19 @@ void run(List<String> args) async {
 
   // Start the server.
   await pod.start();
+
+  // Demo mode: set STREAKBOND_DEMO_MODE=true to shorten evaluation interval
+  final isDemoMode = Platform.environment['STREAKBOND_DEMO_MODE'] == 'true';
+  final evaluationInterval = isDemoMode
+      ? const Duration(seconds: 30)
+      : const Duration(minutes: 1);
+
+  if (isDemoMode) {
+    stdout.writeln('[DEMO MODE] Streak evaluator running every 30 seconds');
+  }
+
+  // Periodic streak evaluation — the midnight streak-killer
+  Timer.periodic(evaluationInterval, (_) async {
+    await StreakEvaluator.evaluateAllPacts(pod);
+  });
 }

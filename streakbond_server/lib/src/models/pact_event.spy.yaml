@@ -1,0 +1,11 @@
+### Real-time event broadcast to connected clients.
+class: PactEvent
+fields:
+  ### The pact this event relates to.
+  pactId: int
+  ### Event type: 'streakUp', 'streakLost', 'partnerCheckedIn', 'pactAccepted'.
+  eventType: String
+  ### Current streak value after this event.
+  streak: int
+  ### Human-readable event message.
+  message: String
