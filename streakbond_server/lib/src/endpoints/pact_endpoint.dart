@@ -29,7 +29,9 @@ class PactEndpoint extends Endpoint {
     }
 
     final userId = session.authenticated?.userIdentifier;
-    if (userId == null) throw Exception('Not authenticated');
+    if (userId == null) {
+      throw Exception('Not authenticated');
+    }
 
     final pact = Pact(
       title: titleTrimmed,
@@ -50,18 +52,24 @@ class PactEndpoint extends Endpoint {
   /// Sets status to 'active' and assigns partnerId.
   Future<Pact> acceptPact(Session session, String inviteCode) async {
     final userId = session.authenticated?.userIdentifier;
-    if (userId == null) throw Exception('Not authenticated');
+    if (userId == null) {
+      throw Exception('Not authenticated');
+    }
 
     final pact = await Pact.db.findFirstRow(
       session,
       where: (p) => p.inviteCode.equals(inviteCode),
     );
 
-    if (pact == null) throw Exception('Pact not found.');
-    if (pact.status != PactStatus.pending)
+    if (pact == null) {
+      throw Exception('Pact not found.');
+    }
+    if (pact.status != PactStatus.pending) {
       throw Exception('Pact is not pending.');
-    if (pact.ownerId == userId)
+    }
+    if (pact.ownerId == userId) {
       throw Exception('You cannot accept your own pact.');
+    }
 
     pact.partnerId = userId;
     pact.status = PactStatus.active;
@@ -87,10 +95,14 @@ class PactEndpoint extends Endpoint {
   /// broadcasts 'streakUp' to both users.
   Future<bool> checkIn(Session session, int pactId) async {
     final userId = session.authenticated?.userIdentifier;
-    if (userId == null) throw Exception('Not authenticated');
+    if (userId == null) {
+      throw Exception('Not authenticated');
+    }
 
     final pact = await Pact.db.findById(session, pactId);
-    if (pact == null) throw Exception('Pact not found.');
+    if (pact == null) {
+      throw Exception('Pact not found.');
+    }
     if (pact.ownerId != userId && pact.partnerId != userId) {
       throw Exception('Not authorized for this pact.');
     }
@@ -162,7 +174,9 @@ class PactEndpoint extends Endpoint {
   /// Returns all pacts where the user is owner or partner.
   Future<List<Pact>> getMyPacts(Session session) async {
     final userId = session.authenticated?.userIdentifier;
-    if (userId == null) throw Exception('Not authenticated');
+    if (userId == null) {
+      throw Exception('Not authenticated');
+    }
 
     return await Pact.db.find(
       session,
@@ -174,10 +188,14 @@ class PactEndpoint extends Endpoint {
   /// Breaks a pact. Sets status to 'broken'.
   Future<bool> breakPact(Session session, int pactId) async {
     final userId = session.authenticated?.userIdentifier;
-    if (userId == null) throw Exception('Not authenticated');
+    if (userId == null) {
+      throw Exception('Not authenticated');
+    }
 
     final pact = await Pact.db.findById(session, pactId);
-    if (pact == null) throw Exception('Pact not found.');
+    if (pact == null) {
+      throw Exception('Pact not found.');
+    }
     if (pact.ownerId != userId && pact.partnerId != userId) {
       throw Exception('Not authorized for this pact.');
     }
@@ -205,10 +223,14 @@ class PactEndpoint extends Endpoint {
   /// Returns check-in history for a pact.
   Future<List<CheckIn>> getCheckInHistory(Session session, int pactId) async {
     final userId = session.authenticated?.userIdentifier;
-    if (userId == null) throw Exception('Not authenticated');
+    if (userId == null) {
+      throw Exception('Not authenticated');
+    }
 
     final pact = await Pact.db.findById(session, pactId);
-    if (pact == null) throw Exception('Pact not found.');
+    if (pact == null) {
+      throw Exception('Pact not found.');
+    }
     if (pact.ownerId != userId && pact.partnerId != userId) {
       throw Exception('Not authorized for this pact.');
     }
@@ -232,7 +254,9 @@ class PactEndpoint extends Endpoint {
   /// Checks if the current user has checked in today for a specific pact.
   Future<bool> hasCheckedInToday(Session session, int pactId) async {
     final userId = session.authenticated?.userIdentifier;
-    if (userId == null) throw Exception('Not authenticated');
+    if (userId == null) {
+      throw Exception('Not authenticated');
+    }
 
     final today = _todayUtc();
     final count = await CheckIn.db.count(

@@ -13,7 +13,9 @@ class StreakStreamEndpoint extends Endpoint {
   /// from the PactEndpoint and StreakEvaluator.
   Stream<PactEvent> listenForUpdates(Session session) async* {
     final userId = session.authenticated?.userIdentifier;
-    if (userId == null) return;
+    if (userId == null) {
+      return;
+    }
 
     final channel = 'user_$userId';
     final messageStream = session.messages.createStream<PactEvent>(channel);

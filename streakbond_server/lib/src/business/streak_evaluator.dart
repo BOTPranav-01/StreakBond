@@ -29,11 +29,15 @@ class StreakEvaluator {
       for (final pact in activePacts) {
         // Check if already evaluated today
         final evaluationKey = '${pact.id}_$todayStr';
-        if (_evaluatedDays.contains(evaluationKey)) continue;
+        if (_evaluatedDays.contains(evaluationKey)) {
+          continue;
+        }
 
         // Only evaluate pacts whose window has closed
         // (current UTC time is past the window end)
-        if (currentTime.compareTo(pact.checkInWindowEndUtc) < 0) continue;
+        if (currentTime.compareTo(pact.checkInWindowEndUtc) < 0) {
+          continue;
+        }
 
         // Count today's check-ins for this pact
         final checkInCount = await CheckIn.db.count(
