@@ -9,7 +9,9 @@ import 'package:streakbond_flutter/widgets/partner_status_dot.dart';
 import 'package:streakbond_flutter/widgets/streak_counter.dart';
 
 void main() {
-  testWidgets('Renders StreakBond core widgets and design system components', (tester) async {
+  testWidgets('Renders StreakBond core widgets and design system components', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       MaterialApp(
         theme: buildStreakTheme(),

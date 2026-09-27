@@ -83,8 +83,9 @@ class _GlitchOverlayState extends State<GlitchOverlay>
             builder: (context, _) {
               return IgnorePointer(
                 child: Container(
-                  color: StreakColors.danger
-                      .withValues(alpha: (1.0 - _controller.value) * 0.4),
+                  color: StreakColors.danger.withValues(
+                    alpha: (1.0 - _controller.value) * 0.4,
+                  ),
                 ),
               );
             },

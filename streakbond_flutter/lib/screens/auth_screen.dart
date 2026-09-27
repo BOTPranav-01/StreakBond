@@ -26,7 +26,10 @@ class AuthScreen extends StatelessWidget {
               backgroundColor: StreakColors.surface,
               title: Text(
                 'RETRIEVE VERIFICATION CODE',
-                style: StreakTextStyles.displayMedium.copyWith(fontSize: 16, color: StreakColors.primary),
+                style: StreakTextStyles.displayMedium.copyWith(
+                  fontSize: 16,
+                  color: StreakColors.primary,
+                ),
               ),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -34,7 +37,10 @@ class AuthScreen extends StatelessWidget {
                 children: [
                   Text(
                     'Enter your registration email to fetch the code directly from the server:',
-                    style: StreakTextStyles.bodyMedium.copyWith(fontSize: 13, color: StreakColors.textSecondary),
+                    style: StreakTextStyles.bodyMedium.copyWith(
+                      fontSize: 13,
+                      color: StreakColors.textSecondary,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   TextField(
@@ -42,13 +48,19 @@ class AuthScreen extends StatelessWidget {
                     style: StreakTextStyles.bodyLarge,
                     decoration: const InputDecoration(
                       hintText: 'your-email@example.com',
-                      prefixIcon: Icon(Icons.email_outlined, color: StreakColors.primary),
+                      prefixIcon: Icon(
+                        Icons.email_outlined,
+                        color: StreakColors.primary,
+                      ),
                     ),
                   ),
                   if (fetchedCode != null) ...[
                     const SizedBox(height: 16),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       decoration: BoxDecoration(
                         color: StreakColors.accent.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
@@ -59,14 +71,24 @@ class AuthScreen extends StatelessWidget {
                         children: [
                           SelectableText(
                             fetchedCode!,
-                            style: StreakTextStyles.displayMedium.copyWith(fontSize: 24, color: StreakColors.accent),
+                            style: StreakTextStyles.displayMedium.copyWith(
+                              fontSize: 24,
+                              color: StreakColors.accent,
+                            ),
                           ),
                           IconButton(
-                            icon: const Icon(Icons.copy, color: StreakColors.accent),
+                            icon: const Icon(
+                              Icons.copy,
+                              color: StreakColors.accent,
+                            ),
                             onPressed: () {
-                              Clipboard.setData(ClipboardData(text: fetchedCode!));
+                              Clipboard.setData(
+                                ClipboardData(text: fetchedCode!),
+                              );
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Code copied to clipboard!')),
+                                const SnackBar(
+                                  content: Text('Code copied to clipboard!'),
+                                ),
                               );
                             },
                           ),
@@ -76,7 +98,13 @@ class AuthScreen extends StatelessWidget {
                   ],
                   if (errorMsg != null) ...[
                     const SizedBox(height: 12),
-                    Text(errorMsg!, style: const TextStyle(color: StreakColors.danger, fontSize: 12)),
+                    Text(
+                      errorMsg!,
+                      style: const TextStyle(
+                        color: StreakColors.danger,
+                        fontSize: 12,
+                      ),
+                    ),
                   ],
                 ],
               ),
@@ -96,13 +124,15 @@ class AuthScreen extends StatelessWidget {
                             errorMsg = null;
                           });
                           try {
-                            final code = await client.authHelper.getLatestVerificationCode(email);
+                            final code = await client.authHelper
+                                .getLatestVerificationCode(email);
                             setDialogState(() {
                               isFetching = false;
                               if (code != null && code.isNotEmpty) {
                                 fetchedCode = code;
                               } else {
-                                errorMsg = 'No code generated yet for $email. Please submit the sign-up form first.';
+                                errorMsg =
+                                    'No code generated yet for $email. Please submit the sign-up form first.';
                               }
                             });
                           } catch (e) {
@@ -113,7 +143,14 @@ class AuthScreen extends StatelessWidget {
                           }
                         },
                   child: isFetching
-                      ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: StreakColors.background))
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: StreakColors.background,
+                          ),
+                        )
                       : const Text('FETCH CODE'),
                 ),
               ],
@@ -139,7 +176,10 @@ class AuthScreen extends StatelessWidget {
             child: SafeArea(
               child: Center(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 32,
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -149,16 +189,25 @@ class AuthScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: StreakColors.primary.withValues(alpha: 0.1),
-                          border: Border.all(color: StreakColors.primary, width: 2),
+                          border: Border.all(
+                            color: StreakColors.primary,
+                            width: 2,
+                          ),
                           boxShadow: [
                             BoxShadow(
-                              color: StreakColors.primary.withValues(alpha: 0.3),
+                              color: StreakColors.primary.withValues(
+                                alpha: 0.3,
+                              ),
                               blurRadius: 20,
                               spreadRadius: 2,
                             ),
                           ],
                         ),
-                        child: const Icon(Icons.bolt, size: 48, color: StreakColors.primary),
+                        child: const Icon(
+                          Icons.bolt,
+                          size: 48,
+                          color: StreakColors.primary,
+                        ),
                       ),
                       const SizedBox(height: 24),
                       Text(
@@ -199,7 +248,9 @@ class AuthScreen extends StatelessWidget {
                               onAuthenticated: () {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                    content: Text('Identity verified. Access granted.'),
+                                    content: Text(
+                                      'Identity verified. Access granted.',
+                                    ),
                                     backgroundColor: StreakColors.success,
                                   ),
                                 );
@@ -207,7 +258,9 @@ class AuthScreen extends StatelessWidget {
                               onError: (error) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text('Authentication error: $error'),
+                                    content: Text(
+                                      'Authentication error: $error',
+                                    ),
                                     backgroundColor: StreakColors.danger,
                                   ),
                                 );
@@ -218,7 +271,11 @@ class AuthScreen extends StatelessWidget {
                             const SizedBox(height: 8),
                             TextButton.icon(
                               onPressed: () => _showCodeHelperDialog(context),
-                              icon: const Icon(Icons.key, size: 16, color: StreakColors.accent),
+                              icon: const Icon(
+                                Icons.key,
+                                size: 16,
+                                color: StreakColors.accent,
+                              ),
                               label: Text(
                                 'FETCH VERIFICATION CODE (HACKATHON / DEMO)',
                                 style: StreakTextStyles.labelSmall.copyWith(
@@ -234,7 +291,9 @@ class AuthScreen extends StatelessWidget {
                       Text(
                         'Serverpod 4.0 • Zero external APIs • Local DB Auth',
                         style: StreakTextStyles.labelSmall.copyWith(
-                          color: StreakColors.textSecondary.withValues(alpha: 0.6),
+                          color: StreakColors.textSecondary.withValues(
+                            alpha: 0.6,
+                          ),
                         ),
                       ),
                     ],

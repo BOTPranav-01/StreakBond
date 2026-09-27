@@ -13,7 +13,8 @@ class CreatePactScreen extends StatefulWidget {
   State<CreatePactScreen> createState() => _CreatePactScreenState();
 }
 
-class _CreatePactScreenState extends State<CreatePactScreen> with SingleTickerProviderStateMixin {
+class _CreatePactScreenState extends State<CreatePactScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   // Create Form State
@@ -73,7 +74,10 @@ class _CreatePactScreenState extends State<CreatePactScreen> with SingleTickerPr
       if (mounted) {
         setState(() => _isCreating = false);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to initialize pact: $e'), backgroundColor: StreakColors.danger),
+          SnackBar(
+            content: Text('Failed to initialize pact: $e'),
+            backgroundColor: StreakColors.danger,
+          ),
         );
       }
     }
@@ -105,7 +109,10 @@ class _CreatePactScreenState extends State<CreatePactScreen> with SingleTickerPr
       if (mounted) {
         setState(() => _isJoining = false);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to accept pact: $e'), backgroundColor: StreakColors.danger),
+          SnackBar(
+            content: Text('Failed to accept pact: $e'),
+            backgroundColor: StreakColors.danger,
+          ),
         );
       }
     }
@@ -118,7 +125,10 @@ class _CreatePactScreenState extends State<CreatePactScreen> with SingleTickerPr
       appBar: AppBar(
         title: Text(
           'ESTABLISH BOND',
-          style: StreakTextStyles.displayMedium.copyWith(fontSize: 20, letterSpacing: 1.5),
+          style: StreakTextStyles.displayMedium.copyWith(
+            fontSize: 20,
+            letterSpacing: 1.5,
+          ),
         ),
         bottom: TabBar(
           controller: _tabController,
@@ -160,18 +170,26 @@ class _CreatePactScreenState extends State<CreatePactScreen> with SingleTickerPr
                   color: StreakColors.accent.withValues(alpha: 0.1),
                   border: Border.all(color: StreakColors.accent),
                 ),
-                child: const Icon(Icons.check_circle_outline, size: 64, color: StreakColors.accent),
+                child: const Icon(
+                  Icons.check_circle_outline,
+                  size: 64,
+                  color: StreakColors.accent,
+                ),
               ),
               const SizedBox(height: 24),
               Text(
                 'PACT INITIALIZED',
-                style: StreakTextStyles.displayMedium.copyWith(letterSpacing: 2),
+                style: StreakTextStyles.displayMedium.copyWith(
+                  letterSpacing: 2,
+                ),
               ),
               const SizedBox(height: 12),
               Text(
                 'Share this access key with your partner to seal the bond.',
                 textAlign: TextAlign.center,
-                style: StreakTextStyles.bodyMedium.copyWith(color: StreakColors.textSecondary),
+                style: StreakTextStyles.bodyMedium.copyWith(
+                  color: StreakColors.textSecondary,
+                ),
               ),
               const SizedBox(height: 24),
               GlassmorphismCard(
@@ -191,9 +209,13 @@ class _CreatePactScreenState extends State<CreatePactScreen> with SingleTickerPr
                     IconButton(
                       icon: const Icon(Icons.copy, color: StreakColors.accent),
                       onPressed: () {
-                        Clipboard.setData(ClipboardData(text: _createdInviteCode!));
+                        Clipboard.setData(
+                          ClipboardData(text: _createdInviteCode!),
+                        );
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Access key copied to clipboard')),
+                          const SnackBar(
+                            content: Text('Access key copied to clipboard'),
+                          ),
                         );
                       },
                     ),
@@ -218,7 +240,10 @@ class _CreatePactScreenState extends State<CreatePactScreen> with SingleTickerPr
         children: [
           Text(
             'SHARED COMMITMENT',
-            style: StreakTextStyles.labelSmall.copyWith(color: StreakColors.primary, letterSpacing: 1.5),
+            style: StreakTextStyles.labelSmall.copyWith(
+              color: StreakColors.primary,
+              letterSpacing: 1.5,
+            ),
           ),
           const SizedBox(height: 8),
           TextField(
@@ -226,18 +251,27 @@ class _CreatePactScreenState extends State<CreatePactScreen> with SingleTickerPr
             style: StreakTextStyles.bodyLarge,
             decoration: const InputDecoration(
               hintText: 'e.g. 20 pushups, 30 min study, no sugar',
-              prefixIcon: Icon(Icons.fitness_center, color: StreakColors.primary),
+              prefixIcon: Icon(
+                Icons.fitness_center,
+                color: StreakColors.primary,
+              ),
             ),
           ),
           const SizedBox(height: 24),
           Text(
             'DAILY CHECK-IN WINDOW',
-            style: StreakTextStyles.labelSmall.copyWith(color: StreakColors.primary, letterSpacing: 1.5),
+            style: StreakTextStyles.labelSmall.copyWith(
+              color: StreakColors.primary,
+              letterSpacing: 1.5,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
             'Both members must check in between these hours daily or the streak will die.',
-            style: StreakTextStyles.bodyMedium.copyWith(color: StreakColors.textSecondary, fontSize: 13),
+            style: StreakTextStyles.bodyMedium.copyWith(
+              color: StreakColors.textSecondary,
+              fontSize: 13,
+            ),
           ),
           const SizedBox(height: 16),
           Row(
@@ -245,35 +279,70 @@ class _CreatePactScreenState extends State<CreatePactScreen> with SingleTickerPr
               Expanded(
                 child: GlassmorphismCard(
                   onTap: () async {
-                    final picked = await showTimePicker(context: context, initialTime: _startTime);
+                    final picked = await showTimePicker(
+                      context: context,
+                      initialTime: _startTime,
+                    );
                     if (picked != null) setState(() => _startTime = picked);
                   },
-                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 16,
+                    horizontal: 12,
+                  ),
                   child: Column(
                     children: [
-                      Text('WINDOW OPEN', style: StreakTextStyles.labelSmall.copyWith(color: StreakColors.textSecondary)),
+                      Text(
+                        'WINDOW OPEN',
+                        style: StreakTextStyles.labelSmall.copyWith(
+                          color: StreakColors.textSecondary,
+                        ),
+                      ),
                       const SizedBox(height: 8),
-                      Text(_startTime.format(context), style: StreakTextStyles.displayMedium.copyWith(fontSize: 22)),
+                      Text(
+                        _startTime.format(context),
+                        style: StreakTextStyles.displayMedium.copyWith(
+                          fontSize: 22,
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 12),
-                child: Icon(Icons.arrow_forward, color: StreakColors.textSecondary),
+                child: Icon(
+                  Icons.arrow_forward,
+                  color: StreakColors.textSecondary,
+                ),
               ),
               Expanded(
                 child: GlassmorphismCard(
                   onTap: () async {
-                    final picked = await showTimePicker(context: context, initialTime: _endTime);
+                    final picked = await showTimePicker(
+                      context: context,
+                      initialTime: _endTime,
+                    );
                     if (picked != null) setState(() => _endTime = picked);
                   },
-                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 16,
+                    horizontal: 12,
+                  ),
                   child: Column(
                     children: [
-                      Text('WINDOW CLOSE', style: StreakTextStyles.labelSmall.copyWith(color: StreakColors.textSecondary)),
+                      Text(
+                        'WINDOW CLOSE',
+                        style: StreakTextStyles.labelSmall.copyWith(
+                          color: StreakColors.textSecondary,
+                        ),
+                      ),
                       const SizedBox(height: 8),
-                      Text(_endTime.format(context), style: StreakTextStyles.displayMedium.copyWith(fontSize: 22)),
+                      Text(
+                        _endTime.format(context),
+                        style: StreakTextStyles.displayMedium.copyWith(
+                          fontSize: 22,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -290,7 +359,10 @@ class _CreatePactScreenState extends State<CreatePactScreen> with SingleTickerPr
                   ? const SizedBox(
                       width: 24,
                       height: 24,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: StreakColors.background),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: StreakColors.background,
+                      ),
                     )
                   : const Text('GENERATE PACT'),
             ),
@@ -308,18 +380,26 @@ class _CreatePactScreenState extends State<CreatePactScreen> with SingleTickerPr
         children: [
           Text(
             'JOIN EXISTING PACT',
-            style: StreakTextStyles.labelSmall.copyWith(color: StreakColors.primary, letterSpacing: 1.5),
+            style: StreakTextStyles.labelSmall.copyWith(
+              color: StreakColors.primary,
+              letterSpacing: 1.5,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
             'Enter the access key provided by your accountability partner.',
-            style: StreakTextStyles.bodyMedium.copyWith(color: StreakColors.textSecondary),
+            style: StreakTextStyles.bodyMedium.copyWith(
+              color: StreakColors.textSecondary,
+            ),
           ),
           const SizedBox(height: 24),
           TextField(
             controller: _inviteCodeController,
             textCapitalization: TextCapitalization.characters,
-            style: StreakTextStyles.displayMedium.copyWith(fontSize: 22, letterSpacing: 3),
+            style: StreakTextStyles.displayMedium.copyWith(
+              fontSize: 22,
+              letterSpacing: 3,
+            ),
             decoration: const InputDecoration(
               hintText: 'BOND-XXXX',
               prefixIcon: Icon(Icons.vpn_key, color: StreakColors.primary),
@@ -335,7 +415,10 @@ class _CreatePactScreenState extends State<CreatePactScreen> with SingleTickerPr
                   ? const SizedBox(
                       width: 24,
                       height: 24,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: StreakColors.background),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: StreakColors.background,
+                      ),
                     )
                   : const Text('LOCK IN'),
             ),

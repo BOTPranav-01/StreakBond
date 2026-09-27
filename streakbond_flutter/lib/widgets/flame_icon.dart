@@ -23,8 +23,8 @@ class FlameIcon extends StatelessWidget {
     final color = streak > 7
         ? StreakColors.accent
         : streak > 0
-            ? StreakColors.primary
-            : StreakColors.textSecondary;
+        ? StreakColors.primary
+        : StreakColors.textSecondary;
 
     return SizedBox(
       width: size,

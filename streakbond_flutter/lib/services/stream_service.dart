@@ -27,7 +27,9 @@ class StreamService {
       _isListening = true;
       _subscription = stream.listen(
         (event) {
-          debugPrint('StreamService received event: ${event.eventType} for pact: ${event.pactId}');
+          debugPrint(
+            'StreamService received event: ${event.eventType} for pact: ${event.pactId}',
+          );
           _eventController.add(event);
         },
         onError: (error) {

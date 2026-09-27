@@ -20,7 +20,8 @@ class PactEndpoint extends Endpoint {
     if (titleTrimmed.isEmpty || titleTrimmed.length > 100) {
       throw Exception('Title must be between 1 and 100 characters.');
     }
-    if (!_isValidTimeFormat(windowStartUtc) || !_isValidTimeFormat(windowEndUtc)) {
+    if (!_isValidTimeFormat(windowStartUtc) ||
+        !_isValidTimeFormat(windowEndUtc)) {
       throw Exception('Time must be in HH:mm format.');
     }
     if (windowStartUtc.compareTo(windowEndUtc) >= 0) {
@@ -57,8 +58,10 @@ class PactEndpoint extends Endpoint {
     );
 
     if (pact == null) throw Exception('Pact not found.');
-    if (pact.status != PactStatus.pending) throw Exception('Pact is not pending.');
-    if (pact.ownerId == userId) throw Exception('You cannot accept your own pact.');
+    if (pact.status != PactStatus.pending)
+      throw Exception('Pact is not pending.');
+    if (pact.ownerId == userId)
+      throw Exception('You cannot accept your own pact.');
 
     pact.partnerId = userId;
     pact.status = PactStatus.active;
@@ -136,7 +139,9 @@ class PactEndpoint extends Endpoint {
         await _broadcastEvent(session, pact.partnerId!, event);
       }
     } else if (count == 1) {
-      final otherUserId = pact.ownerId == userId ? pact.partnerId : pact.ownerId;
+      final otherUserId = pact.ownerId == userId
+          ? pact.partnerId
+          : pact.ownerId;
       if (otherUserId != null) {
         await _broadcastEvent(
           session,
@@ -232,7 +237,10 @@ class PactEndpoint extends Endpoint {
     final today = _todayUtc();
     final count = await CheckIn.db.count(
       session,
-      where: (c) => c.pactId.equals(pactId) & c.userId.equals(userId) & c.day.equals(today),
+      where: (c) =>
+          c.pactId.equals(pactId) &
+          c.userId.equals(userId) &
+          c.day.equals(today),
     );
     return count > 0;
   }
@@ -241,7 +249,10 @@ class PactEndpoint extends Endpoint {
   String _generateInviteCode() {
     const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
     final random = Random.secure();
-    final code = List.generate(4, (_) => chars[random.nextInt(chars.length)]).join();
+    final code = List.generate(
+      4,
+      (_) => chars[random.nextInt(chars.length)],
+    ).join();
     return 'BOND-$code';
   }
 
@@ -255,8 +266,8 @@ class PactEndpoint extends Endpoint {
   String _todayUtc() {
     final now = DateTime.now().toUtc();
     return '${now.year.toString().padLeft(4, '0')}-'
-           '${now.month.toString().padLeft(2, '0')}-'
-           '${now.day.toString().padLeft(2, '0')}';
+        '${now.month.toString().padLeft(2, '0')}-'
+        '${now.day.toString().padLeft(2, '0')}';
   }
 
   // HELPER: Broadcast a PactEvent to a specific user

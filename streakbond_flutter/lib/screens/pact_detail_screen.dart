@@ -83,11 +83,29 @@ class _PactDetailScreenState extends State<PactDetailScreen> {
   void _updateWindowCalculations() {
     if (_pact == null) return;
     final now = DateTime.now().toUtc();
-    final startParts = _pact!.checkInWindowStartUtc.split(':').map(int.parse).toList();
-    final endParts = _pact!.checkInWindowEndUtc.split(':').map(int.parse).toList();
+    final startParts = _pact!.checkInWindowStartUtc
+        .split(':')
+        .map(int.parse)
+        .toList();
+    final endParts = _pact!.checkInWindowEndUtc
+        .split(':')
+        .map(int.parse)
+        .toList();
 
-    final startTime = DateTime.utc(now.year, now.month, now.day, startParts[0], startParts[1]);
-    final endTime = DateTime.utc(now.year, now.month, now.day, endParts[0], endParts[1]);
+    final startTime = DateTime.utc(
+      now.year,
+      now.month,
+      now.day,
+      startParts[0],
+      startParts[1],
+    );
+    final endTime = DateTime.utc(
+      now.year,
+      now.month,
+      now.day,
+      endParts[0],
+      endParts[1],
+    );
 
     if (now.isBefore(startTime)) {
       _isWithinWindow = false;
@@ -150,7 +168,10 @@ class _PactDetailScreenState extends State<PactDetailScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Check-in failed: $e'), backgroundColor: StreakColors.danger),
+          SnackBar(
+            content: Text('Check-in failed: $e'),
+            backgroundColor: StreakColors.danger,
+          ),
         );
       }
     }
@@ -161,7 +182,12 @@ class _PactDetailScreenState extends State<PactDetailScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: StreakColors.surface,
-        title: Text('TERMINATE BOND?', style: StreakTextStyles.displayMedium.copyWith(color: StreakColors.danger)),
+        title: Text(
+          'TERMINATE BOND?',
+          style: StreakTextStyles.displayMedium.copyWith(
+            color: StreakColors.danger,
+          ),
+        ),
         content: Text(
           'This will permanently break the accountability pact and reset all streaks.',
           style: StreakTextStyles.bodyMedium,
@@ -172,7 +198,9 @@ class _PactDetailScreenState extends State<PactDetailScreen> {
             child: const Text('CANCEL'),
           ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: StreakColors.danger),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: StreakColors.danger,
+            ),
             onPressed: () => Navigator.of(ctx).pop(true),
             child: const Text('TERMINATE'),
           ),
@@ -187,7 +215,10 @@ class _PactDetailScreenState extends State<PactDetailScreen> {
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed: $e'), backgroundColor: StreakColors.danger),
+            SnackBar(
+              content: Text('Failed: $e'),
+              backgroundColor: StreakColors.danger,
+            ),
           );
         }
       }
@@ -203,26 +234,38 @@ class _PactDetailScreenState extends State<PactDetailScreen> {
         appBar: AppBar(
           title: Text(
             _pact?.title.toUpperCase() ?? 'PACT DETAIL',
-            style: StreakTextStyles.displayMedium.copyWith(fontSize: 18, letterSpacing: 1.5),
+            style: StreakTextStyles.displayMedium.copyWith(
+              fontSize: 18,
+              letterSpacing: 1.5,
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.calendar_month, color: StreakColors.primary),
+              icon: const Icon(
+                Icons.calendar_month,
+                color: StreakColors.primary,
+              ),
               tooltip: 'Heatmap History',
               onPressed: () {
                 if (_pact != null) {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (_) => HistoryScreen(pactId: _pact!.id!, pactTitle: _pact!.title),
+                      builder: (_) => HistoryScreen(
+                        pactId: _pact!.id!,
+                        pactTitle: _pact!.title,
+                      ),
                     ),
                   );
                 }
               },
             ),
             PopupMenuButton<String>(
-              icon: const Icon(Icons.more_vert, color: StreakColors.textSecondary),
+              icon: const Icon(
+                Icons.more_vert,
+                color: StreakColors.textSecondary,
+              ),
               color: StreakColors.surface,
               onSelected: (val) {
                 if (val == 'break') _breakPact();
@@ -232,9 +275,16 @@ class _PactDetailScreenState extends State<PactDetailScreen> {
                   value: 'break',
                   child: Row(
                     children: [
-                      Icon(Icons.link_off, color: StreakColors.danger, size: 20),
+                      Icon(
+                        Icons.link_off,
+                        color: StreakColors.danger,
+                        size: 20,
+                      ),
                       SizedBox(width: 8),
-                      Text('Break Pact', style: TextStyle(color: StreakColors.danger)),
+                      Text(
+                        'Break Pact',
+                        style: TextStyle(color: StreakColors.danger),
+                      ),
                     ],
                   ),
                 ),
@@ -269,7 +319,9 @@ class _PactDetailScreenState extends State<PactDetailScreen> {
       return const Center(child: Text('Pact not found.'));
     }
 
-    final partnerCheckedIn = _todayCheckInCount == 2 || (!_hasCheckedInToday && _todayCheckInCount == 1);
+    final partnerCheckedIn =
+        _todayCheckInCount == 2 ||
+        (!_hasCheckedInToday && _todayCheckInCount == 1);
 
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -282,12 +334,18 @@ class _PactDetailScreenState extends State<PactDetailScreen> {
             decoration: BoxDecoration(
               color: StreakColors.accent.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: StreakColors.accent.withValues(alpha: 0.4)),
+              border: Border.all(
+                color: StreakColors.accent.withValues(alpha: 0.4),
+              ),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.emoji_events, size: 16, color: StreakColors.accent),
+                const Icon(
+                  Icons.emoji_events,
+                  size: 16,
+                  color: StreakColors.accent,
+                ),
                 const SizedBox(width: 6),
                 Text(
                   'BEST: ${_pact!.bestStreak} DAYS',
@@ -311,7 +369,9 @@ class _PactDetailScreenState extends State<PactDetailScreen> {
               const SizedBox(width: 12),
               StreakCounter(
                 streak: _pact!.streak,
-                color: _pact!.streak > 0 ? StreakColors.primary : StreakColors.textSecondary,
+                color: _pact!.streak > 0
+                    ? StreakColors.primary
+                    : StreakColors.textSecondary,
               ),
             ],
           ),
@@ -346,21 +406,32 @@ class _PactDetailScreenState extends State<PactDetailScreen> {
                         children: [
                           PartnerStatusDot(hasCheckedIn: _hasCheckedInToday),
                           const SizedBox(width: 8),
-                          Text('YOU', style: StreakTextStyles.labelSmall.copyWith(letterSpacing: 1.5)),
+                          Text(
+                            'YOU',
+                            style: StreakTextStyles.labelSmall.copyWith(
+                              letterSpacing: 1.5,
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 6),
                       Text(
                         _hasCheckedInToday ? 'CHECKED IN' : 'PENDING',
                         style: StreakTextStyles.bodyMedium.copyWith(
-                          color: _hasCheckedInToday ? StreakColors.success : StreakColors.textSecondary,
+                          color: _hasCheckedInToday
+                              ? StreakColors.success
+                              : StreakColors.textSecondary,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
                   ),
                 ),
-                Container(height: 40, width: 1, color: StreakColors.glassBorder),
+                Container(
+                  height: 40,
+                  width: 1,
+                  color: StreakColors.glassBorder,
+                ),
                 Expanded(
                   child: Column(
                     children: [
@@ -369,7 +440,12 @@ class _PactDetailScreenState extends State<PactDetailScreen> {
                         children: [
                           PartnerStatusDot(hasCheckedIn: partnerCheckedIn),
                           const SizedBox(width: 8),
-                          Text('PARTNER', style: StreakTextStyles.labelSmall.copyWith(letterSpacing: 1.5)),
+                          Text(
+                            'PARTNER',
+                            style: StreakTextStyles.labelSmall.copyWith(
+                              letterSpacing: 1.5,
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 6),
@@ -377,10 +453,12 @@ class _PactDetailScreenState extends State<PactDetailScreen> {
                         _pact!.partnerId == null
                             ? 'UNLINKED'
                             : partnerCheckedIn
-                                ? 'CHECKED IN'
-                                : 'PENDING',
+                            ? 'CHECKED IN'
+                            : 'PENDING',
                         style: StreakTextStyles.bodyMedium.copyWith(
-                          color: partnerCheckedIn ? StreakColors.success : StreakColors.textSecondary,
+                          color: partnerCheckedIn
+                              ? StreakColors.success
+                              : StreakColors.textSecondary,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

@@ -11,7 +11,11 @@ class HistoryScreen extends StatefulWidget {
   final int pactId;
   final String pactTitle;
 
-  const HistoryScreen({super.key, required this.pactId, required this.pactTitle});
+  const HistoryScreen({
+    super.key,
+    required this.pactId,
+    required this.pactTitle,
+  });
 
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();
@@ -50,7 +54,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
       appBar: AppBar(
         title: Text(
           'HISTORY HEATMAP',
-          style: StreakTextStyles.displayMedium.copyWith(fontSize: 18, letterSpacing: 1.5),
+          style: StreakTextStyles.displayMedium.copyWith(
+            fontSize: 18,
+            letterSpacing: 1.5,
+          ),
         ),
       ),
       body: ScanlineBackground(
@@ -76,13 +83,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
     // Generate the last 35 days (5 weeks)
     final now = DateTime.now().toUtc();
     final today = DateTime.utc(now.year, now.month, now.day);
-    final days = List.generate(35, (index) => today.subtract(Duration(days: 34 - index)));
+    final days = List.generate(
+      35,
+      (index) => today.subtract(Duration(days: 34 - index)),
+    );
 
     // Group check-ins by day
     final Map<String, int> checkInCountPerDay = {};
     if (_history != null) {
       for (final checkIn in _history!) {
-        checkInCountPerDay[checkIn.day] = (checkInCountPerDay[checkIn.day] ?? 0) + 1;
+        checkInCountPerDay[checkIn.day] =
+            (checkInCountPerDay[checkIn.day] ?? 0) + 1;
       }
     }
 
@@ -93,12 +104,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
         children: [
           Text(
             widget.pactTitle.toUpperCase(),
-            style: StreakTextStyles.displayMedium.copyWith(fontSize: 20, color: StreakColors.primary),
+            style: StreakTextStyles.displayMedium.copyWith(
+              fontSize: 20,
+              color: StreakColors.primary,
+            ),
           ),
           const SizedBox(height: 6),
           Text(
             'LAST 5 WEEKS COMMITMENT ARCHIVE',
-            style: StreakTextStyles.labelSmall.copyWith(color: StreakColors.textSecondary, letterSpacing: 1.5),
+            style: StreakTextStyles.labelSmall.copyWith(
+              color: StreakColors.textSecondary,
+              letterSpacing: 1.5,
+            ),
           ),
           const SizedBox(height: 24),
 
@@ -119,7 +136,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   itemCount: days.length,
                   itemBuilder: (context, index) {
                     final day = days[index];
-                    final dateKey = '${day.year.toString().padLeft(4, '0')}-'
+                    final dateKey =
+                        '${day.year.toString().padLeft(4, '0')}-'
                         '${day.month.toString().padLeft(2, '0')}-'
                         '${day.day.toString().padLeft(2, '0')}';
                     final count = checkInCountPerDay[dateKey] ?? 0;
@@ -142,15 +160,22 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       message: '$dateKey: $count/2 checked in',
                       child: Container(
                         decoration: BoxDecoration(
-                          color: cellColor.withValues(alpha: count > 0 ? 0.8 : 0.3),
+                          color: cellColor.withValues(
+                            alpha: count > 0 ? 0.8 : 0.3,
+                          ),
                           borderRadius: BorderRadius.circular(6),
                           border: isToday
-                              ? Border.all(color: StreakColors.primary, width: 2)
+                              ? Border.all(
+                                  color: StreakColors.primary,
+                                  width: 2,
+                                )
                               : border,
                           boxShadow: count >= 2
                               ? [
                                   BoxShadow(
-                                    color: StreakColors.success.withValues(alpha: 0.4),
+                                    color: StreakColors.success.withValues(
+                                      alpha: 0.4,
+                                    ),
                                     blurRadius: 6,
                                   ),
                                 ]
@@ -162,7 +187,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
-                              color: count > 0 ? StreakColors.background : StreakColors.textSecondary,
+                              color: count > 0
+                                  ? StreakColors.background
+                                  : StreakColors.textSecondary,
                             ),
                           ),
                         ),
@@ -194,7 +221,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _buildStatItem('TOTAL CHECK-INS', '${_history?.length ?? 0}'),
-                Container(height: 36, width: 1, color: StreakColors.glassBorder),
+                Container(
+                  height: 36,
+                  width: 1,
+                  color: StreakColors.glassBorder,
+                ),
                 _buildStatItem(
                   'PERFECT DAYS',
                   '${checkInCountPerDay.values.where((c) => c >= 2).length}',
@@ -228,9 +259,21 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget _buildStatItem(String label, String value) {
     return Column(
       children: [
-        Text(value, style: StreakTextStyles.displayMedium.copyWith(fontSize: 24, color: StreakColors.primary)),
+        Text(
+          value,
+          style: StreakTextStyles.displayMedium.copyWith(
+            fontSize: 24,
+            color: StreakColors.primary,
+          ),
+        ),
         const SizedBox(height: 4),
-        Text(label, style: StreakTextStyles.labelSmall.copyWith(color: StreakColors.textSecondary, fontSize: 11)),
+        Text(
+          label,
+          style: StreakTextStyles.labelSmall.copyWith(
+            color: StreakColors.textSecondary,
+            fontSize: 11,
+          ),
+        ),
       ],
     );
   }

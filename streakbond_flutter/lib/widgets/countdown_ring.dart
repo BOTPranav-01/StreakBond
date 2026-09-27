@@ -48,7 +48,9 @@ class CountdownRing extends StatelessWidget {
             size: Size(size, size),
             painter: _RingPainter(
               progress: 1.0 - progress,
-              color: progress > 0.8 ? StreakColors.danger : StreakColors.primary,
+              color: progress > 0.8
+                  ? StreakColors.danger
+                  : StreakColors.primary,
               strokeWidth: strokeWidth,
               hasGlow: true,
             ),
@@ -60,7 +62,9 @@ class CountdownRing extends StatelessWidget {
               Text(
                 timeRemaining,
                 style: StreakTextStyles.bodyLarge.copyWith(
-                  color: progress > 0.8 ? StreakColors.danger : StreakColors.primary,
+                  color: progress > 0.8
+                      ? StreakColors.danger
+                      : StreakColors.primary,
                   fontWeight: FontWeight.w600,
                 ),
               ),

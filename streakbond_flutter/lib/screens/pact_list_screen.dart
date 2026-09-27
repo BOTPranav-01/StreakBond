@@ -114,7 +114,12 @@ class _PactListScreenState extends State<PactListScreen> {
         foregroundColor: StreakColors.background,
         elevation: 6,
         icon: const Icon(Icons.add, color: StreakColors.background),
-        label: Text('NEW PACT', style: StreakTextStyles.button.copyWith(color: StreakColors.background)),
+        label: Text(
+          'NEW PACT',
+          style: StreakTextStyles.button.copyWith(
+            color: StreakColors.background,
+          ),
+        ),
         onPressed: () async {
           final created = await Navigator.of(context).push<bool>(
             MaterialPageRoute(builder: (_) => const CreatePactScreen()),
@@ -144,11 +149,17 @@ class _PactListScreenState extends State<PactListScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.error_outline, color: StreakColors.danger, size: 48),
+              const Icon(
+                Icons.error_outline,
+                color: StreakColors.danger,
+                size: 48,
+              ),
               const SizedBox(height: 16),
               Text(
                 'SYSTEM ERROR',
-                style: StreakTextStyles.displayMedium.copyWith(color: StreakColors.danger),
+                style: StreakTextStyles.displayMedium.copyWith(
+                  color: StreakColors.danger,
+                ),
               ),
               const SizedBox(height: 8),
               Text(
@@ -181,18 +192,26 @@ class _PactListScreenState extends State<PactListScreen> {
                   color: StreakColors.primary.withValues(alpha: 0.08),
                   border: Border.all(color: StreakColors.glassBorder),
                 ),
-                child: const Icon(Icons.link_off, size: 56, color: StreakColors.primary),
+                child: const Icon(
+                  Icons.link_off,
+                  size: 56,
+                  color: StreakColors.primary,
+                ),
               ),
               const SizedBox(height: 24),
               Text(
                 'NO PACTS LOCKED',
-                style: StreakTextStyles.displayMedium.copyWith(letterSpacing: 1.5),
+                style: StreakTextStyles.displayMedium.copyWith(
+                  letterSpacing: 1.5,
+                ),
               ),
               const SizedBox(height: 12),
               Text(
                 'Lock into a shared commitment with a partner.\nIf either misses, both streaks burn to zero.',
                 textAlign: TextAlign.center,
-                style: StreakTextStyles.bodyMedium.copyWith(color: StreakColors.textSecondary),
+                style: StreakTextStyles.bodyMedium.copyWith(
+                  color: StreakColors.textSecondary,
+                ),
               ),
               const SizedBox(height: 32),
               ElevatedButton.icon(
@@ -261,7 +280,10 @@ class _PactListScreenState extends State<PactListScreen> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: statusColor.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(20),
@@ -285,22 +307,32 @@ class _PactListScreenState extends State<PactListScreen> {
               Text(
                 '${pact.streak}',
                 style: StreakTextStyles.displayMedium.copyWith(
-                  color: pact.streak > 0 ? StreakColors.primary : StreakColors.textSecondary,
+                  color: pact.streak > 0
+                      ? StreakColors.primary
+                      : StreakColors.textSecondary,
                 ),
               ),
               const SizedBox(width: 6),
               Text(
                 'DAYS',
-                style: StreakTextStyles.labelSmall.copyWith(color: StreakColors.textSecondary),
+                style: StreakTextStyles.labelSmall.copyWith(
+                  color: StreakColors.textSecondary,
+                ),
               ),
               const Spacer(),
               Row(
                 children: [
-                  const Icon(Icons.schedule, size: 16, color: StreakColors.textSecondary),
+                  const Icon(
+                    Icons.schedule,
+                    size: 16,
+                    color: StreakColors.textSecondary,
+                  ),
                   const SizedBox(width: 4),
                   Text(
                     '${pact.checkInWindowStartUtc} - ${pact.checkInWindowEndUtc} UTC',
-                    style: StreakTextStyles.labelSmall.copyWith(color: StreakColors.textSecondary),
+                    style: StreakTextStyles.labelSmall.copyWith(
+                      color: StreakColors.textSecondary,
+                    ),
                   ),
                 ],
               ),
@@ -313,7 +345,9 @@ class _PactListScreenState extends State<PactListScreen> {
               decoration: BoxDecoration(
                 color: StreakColors.accent.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: StreakColors.accent.withValues(alpha: 0.3)),
+                border: Border.all(
+                  color: StreakColors.accent.withValues(alpha: 0.3),
+                ),
               ),
               child: Row(
                 children: [
@@ -321,7 +355,9 @@ class _PactListScreenState extends State<PactListScreen> {
                   const SizedBox(width: 8),
                   Text(
                     'INVITE CODE: ',
-                    style: StreakTextStyles.labelSmall.copyWith(color: StreakColors.accent),
+                    style: StreakTextStyles.labelSmall.copyWith(
+                      color: StreakColors.accent,
+                    ),
                   ),
                   SelectableText(
                     pact.inviteCode,

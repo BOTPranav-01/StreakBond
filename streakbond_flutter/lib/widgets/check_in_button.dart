@@ -60,14 +60,18 @@ class _CheckInButtonState extends State<CheckInButton>
     return AnimatedBuilder(
       animation: _pulseController,
       builder: (context, child) {
-        final glowOpacity = isActive ? 0.3 + (_pulseController.value * 0.3) : 0.0;
+        final glowOpacity = isActive
+            ? 0.3 + (_pulseController.value * 0.3)
+            : 0.0;
         return Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
             boxShadow: isActive
                 ? [
                     BoxShadow(
-                      color: StreakColors.primary.withValues(alpha: glowOpacity),
+                      color: StreakColors.primary.withValues(
+                        alpha: glowOpacity,
+                      ),
                       blurRadius: 30,
                       spreadRadius: 5,
                     ),
@@ -86,21 +90,21 @@ class _CheckInButtonState extends State<CheckInButton>
             backgroundColor: widget.hasCheckedIn
                 ? StreakColors.success.withValues(alpha: 0.2)
                 : isActive
-                    ? StreakColors.primary
-                    : StreakColors.textSecondary.withValues(alpha: 0.3),
+                ? StreakColors.primary
+                : StreakColors.textSecondary.withValues(alpha: 0.3),
             foregroundColor: widget.hasCheckedIn
                 ? StreakColors.success
                 : isActive
-                    ? StreakColors.background
-                    : StreakColors.textSecondary,
+                ? StreakColors.background
+                : StreakColors.textSecondary,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(24),
               side: BorderSide(
                 color: widget.hasCheckedIn
                     ? StreakColors.success
                     : isActive
-                        ? StreakColors.primary
-                        : StreakColors.textSecondary.withValues(alpha: 0.3),
+                    ? StreakColors.primary
+                    : StreakColors.textSecondary.withValues(alpha: 0.3),
               ),
             ),
           ),
@@ -108,8 +112,8 @@ class _CheckInButtonState extends State<CheckInButton>
             widget.hasCheckedIn
                 ? '✓  CHECKED IN'
                 : isActive
-                    ? 'CHECK IN'
-                    : 'WINDOW CLOSED',
+                ? 'CHECK IN'
+                : 'WINDOW CLOSED',
             style: StreakTextStyles.button,
           ),
         ),

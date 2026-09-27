@@ -27,35 +27,39 @@ void run(List<String> args) async {
     ],
     identityProviderBuilders: [
       EmailIdpConfigFromPasswords(
-        sendRegistrationVerificationCode: (
-          session, {
-          required email,
-          required accountRequestId,
-          required verificationCode,
-          required transaction,
-        }) async {
-          VerificationCodeStore.setCode(email, verificationCode);
-          stdout.writeln('==============================================');
-          stdout.writeln('VERIFICATION CODE FOR $email: $verificationCode');
-          stdout.writeln('==============================================');
-          session.log(
-            'VERIFICATION CODE FOR $email: $verificationCode',
-            level: LogLevel.info,
-          );
-        },
-        sendPasswordResetVerificationCode: (
-          session, {
-          required email,
-          required passwordResetRequestId,
-          required verificationCode,
-          required transaction,
-        }) async {
-          stdout.writeln('PASSWORD RESET CODE FOR $email: $verificationCode');
-          session.log(
-            'PASSWORD RESET CODE FOR $email: $verificationCode',
-            level: LogLevel.info,
-          );
-        },
+        sendRegistrationVerificationCode:
+            (
+              session, {
+              required email,
+              required accountRequestId,
+              required verificationCode,
+              required transaction,
+            }) async {
+              VerificationCodeStore.setCode(email, verificationCode);
+              stdout.writeln('==============================================');
+              stdout.writeln('VERIFICATION CODE FOR $email: $verificationCode');
+              stdout.writeln('==============================================');
+              session.log(
+                'VERIFICATION CODE FOR $email: $verificationCode',
+                level: LogLevel.info,
+              );
+            },
+        sendPasswordResetVerificationCode:
+            (
+              session, {
+              required email,
+              required passwordResetRequestId,
+              required verificationCode,
+              required transaction,
+            }) async {
+              stdout.writeln(
+                'PASSWORD RESET CODE FOR $email: $verificationCode',
+              );
+              session.log(
+                'PASSWORD RESET CODE FOR $email: $verificationCode',
+                level: LogLevel.info,
+              );
+            },
       ),
     ],
   );
