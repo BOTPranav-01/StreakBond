@@ -1,4 +1,5 @@
 import 'package:serverpod/serverpod.dart';
+
 import '../generated/protocol.dart';
 
 /// Evaluates all active pacts and resets streaks when the check-in
@@ -51,7 +52,7 @@ class StreakEvaluator {
         final previousStreak = pact.streak;
         pact.streak = 0;
         await Pact.db.updateRow(session, pact);
-        
+
         _evaluatedDays.add(evaluationKey);
 
         session.log(
@@ -73,7 +74,7 @@ class StreakEvaluator {
           await session.messages.postMessage('user_${pact.partnerId}', event);
         }
       }
-      
+
       // Cleanup old entries
       _evaluatedDays.removeWhere((key) => !key.endsWith(todayStr));
     } finally {
@@ -83,12 +84,12 @@ class StreakEvaluator {
 
   static String _formatDate(DateTime dt) {
     return '${dt.year.toString().padLeft(4, '0')}-'
-           '${dt.month.toString().padLeft(2, '0')}-'
-           '${dt.day.toString().padLeft(2, '0')}';
+        '${dt.month.toString().padLeft(2, '0')}-'
+        '${dt.day.toString().padLeft(2, '0')}';
   }
 
   static String _formatTime(DateTime dt) {
     return '${dt.hour.toString().padLeft(2, '0')}:'
-           '${dt.minute.toString().padLeft(2, '0')}';
+        '${dt.minute.toString().padLeft(2, '0')}';
   }
 }
