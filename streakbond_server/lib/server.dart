@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'src/business/streak_evaluator.dart';
 import 'src/business/verification_code_store.dart';
+
 import 'package:serverpod_auth_idp_server/core.dart';
 import 'package:serverpod_auth_idp_server/providers/email.dart';
 import 'package:serverpod_cloud_storage/serverpod_cloud_storage.dart';
@@ -27,35 +28,39 @@ void run(List<String> args) async {
     ],
     identityProviderBuilders: [
       EmailIdpConfigFromPasswords(
-        sendRegistrationVerificationCode: (
-          session, {
-          required email,
-          required accountRequestId,
-          required verificationCode,
-          required transaction,
-        }) async {
-          VerificationCodeStore.setCode(email, verificationCode);
-          stdout.writeln('==============================================');
-          stdout.writeln('VERIFICATION CODE FOR $email: $verificationCode');
-          stdout.writeln('==============================================');
-          session.log(
-            'VERIFICATION CODE FOR $email: $verificationCode',
-            level: LogLevel.info,
-          );
-        },
-        sendPasswordResetVerificationCode: (
-          session, {
-          required email,
-          required passwordResetRequestId,
-          required verificationCode,
-          required transaction,
-        }) async {
-          stdout.writeln('PASSWORD RESET CODE FOR $email: $verificationCode');
-          session.log(
-            'PASSWORD RESET CODE FOR $email: $verificationCode',
-            level: LogLevel.info,
-          );
-        },
+        sendRegistrationVerificationCode:
+            (
+              session, {
+              required email,
+              required accountRequestId,
+              required verificationCode,
+              required transaction,
+            }) async {
+              VerificationCodeStore.setCode(email, verificationCode);
+              stdout.writeln('==============================================');
+              stdout.writeln('VERIFICATION CODE FOR $email: $verificationCode');
+              stdout.writeln('==============================================');
+              session.log(
+                'VERIFICATION CODE FOR $email: $verificationCode',
+                level: LogLevel.info,
+              );
+            },
+        sendPasswordResetVerificationCode:
+            (
+              session, {
+              required email,
+              required passwordResetRequestId,
+              required verificationCode,
+              required transaction,
+            }) async {
+              stdout.writeln(
+                'PASSWORD RESET CODE FOR $email: $verificationCode',
+              );
+              session.log(
+                'PASSWORD RESET CODE FOR $email: $verificationCode',
+                level: LogLevel.info,
+              );
+            },
       ),
     ],
   );
@@ -91,9 +96,7 @@ void run(List<String> args) async {
   } else {
     // If the flutter web app has not been built, serve the build app page.
     final defaultRoute = StaticRoute.file(
-      File(
-        Uri(path: 'web/pages/build_flutter_app.html').toFilePath(),
-      ),
+      File(Uri(path: 'web/pages/build_flutter_app.html').toFilePath()),
     );
 
     pod.webServer.addMiddleware(
@@ -104,10 +107,7 @@ void run(List<String> args) async {
       '/',
     );
 
-    pod.webServer.addRoute(
-      defaultRoute,
-      '/**',
-    );
+    pod.webServer.addRoute(defaultRoute, '/**');
   }
 
   // Configure cloud storage.

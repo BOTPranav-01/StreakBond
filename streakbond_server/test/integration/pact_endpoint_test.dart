@@ -1,18 +1,28 @@
 import 'package:test/test.dart';
 import 'package:streakbond_server/src/generated/protocol.dart';
+
 import 'test_tools/serverpod_test_tools.dart';
 
 void main() {
-  withServerpod('Given StreakBond Pact and Streak System', (sessionBuilder, endpoints) {
+  withServerpod('Given StreakBond Pact and Streak System', (
+    sessionBuilder,
+    endpoints,
+  ) {
     late TestSessionBuilder sessionUserA;
     late TestSessionBuilder sessionUserB;
 
     setUp(() {
       sessionUserA = sessionBuilder.copyWith(
-        authentication: AuthenticationOverride.authenticationInfo('user_alpha_123', {}),
+        authentication: AuthenticationOverride.authenticationInfo(
+          'user_alpha_123',
+          {},
+        ),
       );
       sessionUserB = sessionBuilder.copyWith(
-        authentication: AuthenticationOverride.authenticationInfo('user_beta_456', {}),
+        authentication: AuthenticationOverride.authenticationInfo(
+          'user_beta_456',
+          {},
+        ),
       );
     });
 
@@ -43,10 +53,16 @@ void main() {
       expect(acceptedPact.status, PactStatus.active);
 
       // 3. User A checks in (1/2 check-ins)
-      final checkInA1 = await endpoints.pact.checkIn(sessionUserA, createdPact.id!);
+      final checkInA1 = await endpoints.pact.checkIn(
+        sessionUserA,
+        createdPact.id!,
+      );
       expect(checkInA1, isTrue);
 
-      final countAfterA = await endpoints.pact.getTodayCheckInCount(sessionUserA, createdPact.id!);
+      final countAfterA = await endpoints.pact.getTodayCheckInCount(
+        sessionUserA,
+        createdPact.id!,
+      );
       expect(countAfterA, 1);
 
       // Streak remains 0 until both check in
@@ -55,14 +71,23 @@ void main() {
       expect(currentPact.streak, 0);
 
       // 4. Idempotency test: User A checking in again on same day should return false
-      final checkInA2 = await endpoints.pact.checkIn(sessionUserA, createdPact.id!);
+      final checkInA2 = await endpoints.pact.checkIn(
+        sessionUserA,
+        createdPact.id!,
+      );
       expect(checkInA2, isFalse);
 
       // 5. User B checks in (2/2 mutual check-ins!)
-      final checkInB = await endpoints.pact.checkIn(sessionUserB, createdPact.id!);
+      final checkInB = await endpoints.pact.checkIn(
+        sessionUserB,
+        createdPact.id!,
+      );
       expect(checkInB, isTrue);
 
-      final countAfterB = await endpoints.pact.getTodayCheckInCount(sessionUserB, createdPact.id!);
+      final countAfterB = await endpoints.pact.getTodayCheckInCount(
+        sessionUserB,
+        createdPact.id!,
+      );
       expect(countAfterB, 2);
 
       // Streak must now be 1!
@@ -72,7 +97,10 @@ void main() {
       expect(currentPact.bestStreak, 1);
 
       // Verify check-in history has 2 records
-      final history = await endpoints.pact.getCheckInHistory(sessionUserA, createdPact.id!);
+      final history = await endpoints.pact.getCheckInHistory(
+        sessionUserA,
+        createdPact.id!,
+      );
       expect(history.length, 2);
     });
 
@@ -90,7 +118,12 @@ void main() {
       );
 
       // Creator cannot accept their own pact
-      final pact = await endpoints.pact.createPact(sessionUserA, 'Self Pact', '06:00', '22:00');
+      final pact = await endpoints.pact.createPact(
+        sessionUserA,
+        'Self Pact',
+        '06:00',
+        '22:00',
+      );
       expect(
         () => endpoints.pact.acceptPact(sessionUserA, pact.inviteCode),
         throwsA(isA<Exception>()),
